@@ -8,7 +8,12 @@ Learning Go, chapter by chapter. Markdown files hold the notes; matching folders
 ├── chapter-1-introduction.md    <- notes
 ├── chapter-1-introduction/      <- code
 │   └── main.go
-└── chapter-2-.../               <- next chapters...
+├── chapter-2.md                 <- notes
+├── chapter-2/                   <- code
+│   ├── main.go
+│   └── util/
+│       └── util.go
+└── chapter-3-.../               <- next chapters...
 ```
 
 ## Chapters
@@ -19,6 +24,14 @@ Learning Go, chapter by chapter. Markdown files hold the notes; matching folders
 
   ```
   go run ./chapter-1-introduction
+  ```
+
+- [Chapter 2: Project Format, Packages, and Imports](./chapter-2.md)
+
+  Run the example:
+
+  ```
+  go run ./chapter-2
   ```
 
 ## Conventions

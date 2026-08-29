@@ -87,3 +87,70 @@ Production Go
 ```
 
 Don't start by memorizing Go syntax. Focus especially on structs, interfaces, pointers, error handling, goroutines, channels, context, packages/modules, and net/http. Those are the concepts that will make Go significantly different from Python/Java/JavaScript.
+
+## Useful Go Commands
+
+### Project Setup
+
+```bash
+go mod init example.com/myproject   # create a new Go module (creates go.mod)
+mkdir myproject && cd myproject     # new project directory (do this first)
+```
+
+### Create / Edit Code
+
+```bash
+# Create or edit source files in your editor, e.g.:
+touch main.go                       # create a new main.go
+```
+
+### Run
+
+```bash
+go run main.go                      # compile and run a single file
+go run .                            # run the package in the current directory
+go run ./chapter-1-introduction     # run a package in a subdirectory
+```
+
+### Build
+
+```bash
+go build .                          # compile into an executable in the current dir
+go build -o myapp .                 # build with a custom output name
+go build ./...                      # build all packages
+GOOS=linux GOARCH=amd64 go build .  # cross-compile for another platform
+```
+
+### Format
+
+```bash
+gofmt -w main.go                    # format a single file in place
+gofmt -w .                          # format everything (check gofmt for dir support)
+go fmt ./...                        # format all packages in the project
+```
+
+### Test
+
+```bash
+go test ./...                       # run all tests
+go test -v -run TestName            # run one test verbosely
+```
+
+### Dependencies
+
+```bash
+go get example.com/some/pkg         # add a dependency
+go mod tidy                         # remove unused deps + add missing ones
+go mod download                     # download module dependencies
+go list -m all                      # list all module dependencies
+```
+
+### Check / Fix
+
+```bash
+go vet ./...                        # report suspicious constructs
+go env                              # show Go environment/config
+go version                          # show installed Go version
+go doc fmt                          # show package/function docs
+go help <command>                   # help for any command
+```

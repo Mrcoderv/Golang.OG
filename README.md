@@ -34,6 +34,14 @@ Learning Go, chapter by chapter. Markdown files hold the notes; matching folders
   go run ./chapter-2
   ```
 
+- [Chapter 3: Variables, Constants, and Data Types](./chapter-3.md)
+
+  Run the example:
+
+  ```
+  go run ./chapter-3
+  ```
+
 ## Conventions
 
 - Notes live in `chapter-N-short-name.md`

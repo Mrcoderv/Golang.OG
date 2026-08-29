@@ -1,0 +1,15 @@
+# Binaries
+*.exe
+*.test
+*.out
+
+# Go workspace / build cache
+go.work
+go.work.sum
+
+# Editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store

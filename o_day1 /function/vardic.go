@@ -28,8 +28,7 @@ func main() {
 	// passing  other variable on the variadic function
 	
     greet("Hello", "Mike", "Liam")   /// here the first name is use ass thegreet string and other as the names using vardic function
-	
-    greet("Welcome", "Jonathan")
 
+    greet("Welcome", "Jonathan")
 
 }

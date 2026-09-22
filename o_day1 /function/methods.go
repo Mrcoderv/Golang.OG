@@ -62,6 +62,9 @@ b
 Cannot be used as a first-orde     Can be used as first-order objects
  object	
 */     
+
+
+
 package main
 import "fmt"
 
@@ -86,6 +89,7 @@ func main() {
     // Calling pointer method with value
     a.updateName("b")
     fmt.Println("After pointer method:", a.name)
+
     
     // Calling value method with pointer
     (&a).showName()

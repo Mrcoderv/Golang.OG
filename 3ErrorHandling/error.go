@@ -75,46 +75,64 @@
 // 	fmt.Println("Unwrapped Error:", unwrappedErr)
 // }
 
-// struct error
+// // struct error
+// package main
+
+// import (
+// 	"fmt"
+// )
+
+// type MyError struct {
+// 	code    int
+// 	message string
+// }
+
+// func (e MyError) Error() string {
+// 	return fmt.Sprintf("error %d: %s", e.code, e.message)
+// }
+
+// func main() {
+
+// 	Roll := 123
+// 	Name := ""
+
+// 	fmt.Println("Roll:", Roll)
+// 	fmt.Println("Name:", Name)
+
+// 	if Roll < 0 {
+// 		err := MyError{
+// 			code:    133,
+// 			message: "Roll number cannot be negative",
+// 		}
+
+// 		fmt.Println(err)
+// 	}
+
+// 	if Name == "" {
+// 		err := MyError{
+// 			code:    133,
+// 			message: "Name cannot be empty",
+// 		}
+
+// 		fmt.Println(err)
+// 	}
+
+// }
+// panic and recover
 package main
 
 import (
 	"fmt"
 )
 
-type MyError struct {
-	code    int
-	message string
-}
-
-func (e MyError) Error() string {
-	return fmt.Sprintf("error %d: %s", e.code, e.message)
-}
-
 func main() {
-
-	Roll := 123
-	Name := ""
-
-	fmt.Println("Roll:", Roll)
-	fmt.Println("Name:", Name)
-
-	if Roll < 0 {
-		err := MyError{
-			code:    133,
-			message: "Roll number cannot be negative",
+	defer func() {
+		if r := recover(); r != nil {  //
+			fmt.Println("Recovered from panic:", r)
 		}
-
-		fmt.Println(err)
-	}
-
-	if Name == "" {
-		err := MyError{
-			code:    133,
-			message: "Name cannot be empty",
-		}
-
-		fmt.Println(err)
-	}
-
-}
+	}()
+	
+	fmt.Println("Before panic")
+	panic("Something went wrong!") 
+	fmt.Println("After panic") 
+}		

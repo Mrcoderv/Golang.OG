@@ -1,3 +1,5 @@
+visit : this https://medium.com/@raghavp791/error-handling-in-go-mastering-go-ep-003-542b5cc0e884
+
 // error handling in go refers to the handling the unexcepted error eg built in or created erro. done by returning error values 
 
 
@@ -44,6 +46,11 @@ this is use to handole the in leine error
 errors.is is used to check the 
 // structure error on go
   like checking the error for the 
+
+
+// panic and recover in go 
+// panic is the way is to suddnly exectingthe  execution of the current function.
+like braak 
 
 
 

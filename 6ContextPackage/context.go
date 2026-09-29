@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"time"
 )
 
 // 1. // time out cotext example
@@ -49,27 +48,25 @@ import (
 // 	}
 // }
 
-// context.TODO()
-func main() {
-	ctx := context.TODO() // Create a context.TODO() context
-	 
+// // context.TODO()
+// func main() {
+// 	ctx := context.TODO() // Create a context.TODO() context
 
-	// Simulate some work
-	select {
-	case <-time.After(2 * time.Second):
-		fmt.Println("Work completed")
-	case <-ctx.Done():
-		fmt.Println("Context canceled:", ctx.Err())
-	
-	
-	}}
-// }
+// 	// Simulate some work
+// 	select {
+// 	case <-time.After(2 * time.Second):
+// 		fmt.Println("Work completed")
+// 	case <-ctx.Done():
+// 		fmt.Println("Context canceled:", ctx.Err())
+
+// 	}}
+// // }
 // // context.withdeadline()
 // func main() {
 // 	deadline := time.Now().Add(2 * time.Second) // Set a deadline 2 seconds from now
 // 	ctx, cancel := context.WithDeadline(context.Background(), deadline)
 // 	defer cancel()
-	
+
 // 	select {
 // 	case <-time.After(3 * time.Second):
 // 		fmt.Println("Work completed")
@@ -78,4 +75,16 @@ func main() {
 // 	}
 // }
 
+// context.WithValue() example
+func main() {
+	ctx := context.WithValue(
+		context.Background(),
+		"userID",
+		123,
+	)
 
+	id := ctx.Value("userID")
+
+	fmt.Println(id)
+
+}

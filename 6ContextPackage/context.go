@@ -94,7 +94,7 @@ import (
 // context.withcancel() example
 func main() {
 	// Create a cancellable context
-	ctx, cancel := context.WithCancel(context.Background())
+	ctx, cancel := context.WithCancel(context.Background()) /// here we manually cancell the task
 
 	// Start a goroutine that does some work
 	go func() {
@@ -111,11 +111,11 @@ func main() {
 	}()
 
 	// Simulate some work in the main goroutine
-	 //checkin the canceel context 
+	//checkin the canceel context
 
-	time.Sleep(4*time.Second)
+	time.Sleep(4 * time.Second)
 	cancel() //checking the cancel context. after sleep
 
 	// Cancel the context
-	
+
 }

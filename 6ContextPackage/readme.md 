@@ -3,4 +3,14 @@ context package is the approach where we tell the function or go routine
  The context package in Go provides a standard way to carry cancellation signals, 
  deadlines, timeouts, and request-scoped values across API boundaries and goroutines.
 
- 
+ // it have several 
+
+// it has several functions to control the context. 
+1. context.Background() - returns an empty context, typically used as the top-level context.
+2. context.WithCancel(parent) - returns a copy of the parent context that can be canceled.
+3. context.WithDeadline(parent, deadline) - returns a copy of the parent context with a specific deadline.
+4. context.WithTimeout(parent, timeout) - returns a copy of the parent context that will be canceled after the specified timeout duration.
+5. ctx.Done() - returns a channel that is closed when the context is canceled or times out.
+6. ctx.Err() - returns an error indicating why the context was canceled (e.g., "context canceled" or "context deadline exceeded").
+7. ctx.Value(key) - retrieves a value associated with the context for a given key, allowing you to pass request-scoped values through the context.
+8. context.WithValue(parent, key, value) - returns a copy of the parent context with an associated key-value pair, allowing you to store and retrieve values in the context.

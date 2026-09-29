@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"time"
 )
 
 // 1. // time out cotext example
@@ -61,7 +62,7 @@ import (
 
 // 	}}
 // // }
-// // context.withdeadline()
+//)2/ // context.withdeadline()
 // func main() {
 // 	deadline := time.Now().Add(2 * time.Second) // Set a deadline 2 seconds from now
 // 	ctx, cancel := context.WithDeadline(context.Background(), deadline)
@@ -75,16 +76,46 @@ import (
 // 	}
 // }
 
-// context.WithValue() example
+// context.WithValue() example   this is used to return the value  of code .
+// //
+// func main() {
+// 	ctx := context.WithValue(
+// 		context.Background(),
+// 		"userID",
+// 		123,
+// 	)
+
+// 	id := ctx.Value("userID")
+
+// 	fmt.Println(id)
+
+// }
+
+// context.withcancel() example
 func main() {
-	ctx := context.WithValue(
-		context.Background(),
-		"userID",
-		123,
-	)
+	// Create a cancellable context
+	ctx, cancel := context.WithCancel(context.Background())
 
-	id := ctx.Value("userID")
+	// Start a goroutine that does some work
+	go func() {
+		for {
+			select {
+			case <-ctx.Done():
+				fmt.Println("Goroutine received cancellation signal")
+				return
+			default:
+				// Simulate work
+				fmt.Println("Goroutine is working...")
+			}
+		}
+	}()
 
-	fmt.Println(id)
+	// Simulate some work in the main goroutine
+	 //checkin the canceel context 
 
+	time.Sleep(4*time.Second)
+	cancel() //checking the cancel context. after sleep
+
+	// Cancel the context
+	
 }

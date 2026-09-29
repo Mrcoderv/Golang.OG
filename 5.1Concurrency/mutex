@@ -1,6 +1,8 @@
 // // is used to syncronize the access of the 	shared resources of the go routine 
 // package main
 
+
+
 // import (
 // 	"fmt"
 // 	"sync"

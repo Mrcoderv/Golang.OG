@@ -92,30 +92,32 @@ import (
 // }
 
 // context.withcancel() example
-func main() {
-	// Create a cancellable context
-	ctx, cancel := context.WithCancel(context.Background()) /// here we manually cancell the task
+// func main() {
+// 	// Create a cancellable context
+// 	ctx, cancel := context.WithCancel(context.Background()) /// here we manually cancell the task
 
-	// Start a goroutine that does some work
-	go func() {
-		for {
-			select {
-			case <-ctx.Done():
-				fmt.Println("Goroutine received cancellation signal")
-				return
-			default:
-				// Simulate work
-				fmt.Println("Goroutine is working...")
-			}
-		}
-	}()
+// 	// Start a goroutine that does some work
+// 	go func() {
+// 		for {
+// 			select {
+// 			case <-ctx.Done():
+// 				fmt.Println("Goroutine received cancellation signal")
+// 				return
+// 			default:
+// 				// Simulate work
+// 				fmt.Println("Goroutine is working...")
+// 			}
+// 		}
+// 	}()
 
-	// Simulate some work in the main goroutine
-	//checkin the canceel context
+// 	// Simulate some work in the main goroutine
+// 	//checkin the canceel context
 
-	time.Sleep(4 * time.Second)
-	cancel() //checking the cancel context. after sleep
+// 	time.Sleep(4 * time.Second)
+// 	cancel() //checking the cancel context. after sleep
 
-	// Cancel the context
+// 	// Cancel the context
 
-}
+// }
+
+nw

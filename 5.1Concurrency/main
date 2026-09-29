@@ -28,23 +28,23 @@
 
 package main
 
-import (
-	"fmt"
-	"sync"
-	"time"
-)
-func main (){
-	createChannel := make(chan int)
-	go func() {
-		for i := 0; i < 5; i++ {
-			createChannel <- i
-		}
-		close(createChannel)
-	}()
+// import (
+// 	"fmt"
+// 	"sync"
+// 	"time"
+// )
+// func main (){
+// 	createChannel := make(chan int)
+// 	go func() {
+// 		for i := 0; i < 5; i++ {
+// 			createChannel <- i
+// 		}
+// 		close(createChannel)
+// 	}()
 
-	for val := range createChannel {
-		fmt.Println(val)
-		time.Sleep(time.Second)
-	}
-}
+// 	for val := range createChannel {
+// 		fmt.Println(val)
+// 		time.Sleep(time.Second)
+// 	}
+// }
 

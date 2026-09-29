@@ -7,9 +7,10 @@ import (
 type Task struct {
 	ID int
 }
-
 // func main() {
-// 	// create a new worker pool with 5 workers
+// 	// create a //
+
+//  worker pool with 5 workers
 // 	pool := NewWorkerPool(5)
 
 // 	// start the worker pool

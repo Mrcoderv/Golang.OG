@@ -1,0 +1,6 @@
+context package is the approach where we tell the function or go routine 
+ work is cancelled, times out, or reaches its deadline 
+ The context package in Go provides a standard way to carry cancellation signals, 
+ deadlines, timeouts, and request-scoped values across API boundaries and goroutines.
+
+ 

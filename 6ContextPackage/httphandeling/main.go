@@ -8,22 +8,23 @@ import (
 )
 
 func main() {
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	defer cancel() // Cleanup crew
 
-	req, err := http.NewRequestWithContext(ctx, "GET", "https://api.example.com", nil)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	url := "https://api.example.com"
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
-		fmt.Println("error aagayo ", err)
+		fmt.Println("error comes ", err)
 		return
 	}
-
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Println("BOO:", err) // Times out? You’ll see context.DeadlineExceeded
+		fmt.Println("nope :", err)
 		return
 	}
 	defer resp.Body.Close()
 
-	fmt.Println("BOOM", resp.Status) // we get response.
+	fmt.Println("yup ", resp.Status)
 }

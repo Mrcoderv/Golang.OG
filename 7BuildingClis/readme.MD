@@ -31,4 +31,4 @@ flag.Parse() is used to break the  the command-line flags provided by the user. 
  Step 4 — Subcommands  
  like creating the self command for the system 
  ie. creating the admin of the system 
- 
+eg 

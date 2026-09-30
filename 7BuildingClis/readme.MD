@@ -32,3 +32,7 @@ flag.Parse() is used to break the  the command-line flags provided by the user. 
  like creating the self command for the system 
  ie. creating the admin of the system 
 eg 
+
+
+// there are several farame work that are used to make the cli product .
+// cobra

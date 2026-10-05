@@ -3,10 +3,10 @@ package main
 import "fmt"
 
 // this is the depandency
-type Oven interface {
+type Oven interface { // di 1
 	temperature() string
 }
-type Ingredients interface {
+type Ingredients interface { // di 2
 	mix() []string
 }
 
@@ -61,8 +61,6 @@ func (b Bakery) Bake() {
 	fmt.Println("Baking...")
 	fmt.Println()
 }
-
-// dependency part close.
 
 func main() {
 	fmt.Println("Using DI.")

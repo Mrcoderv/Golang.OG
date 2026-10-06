@@ -1,4 +1,5 @@
 // single responsibility principle
+
 package main
 
 import "fmt"

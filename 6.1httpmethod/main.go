@@ -64,6 +64,7 @@ func usersHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // /users/{id} demonstrates PUT, PATCH, DELETE, HEAD, and OPTIONS.
+
 func userHandler(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Path[len("/users/"):]
 	if id == "" {

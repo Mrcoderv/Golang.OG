@@ -4,18 +4,19 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	fx
 
 	_ "github.com/lib/pq"
 )
 
-type User struct {
+type SQLUser struct {
 	ID    int
 	Name  string
 	Email string
 	Age   int
 }
 
-func CreateUser(db *sql.DB) {
+func CreateUserInteractive(db *sql.DB) {
 	var name, email string
 	var age int
 
@@ -53,7 +54,7 @@ func GetUser(db *sql.DB) {
 	fmt.Print("Enter user ID: ")
 	fmt.Scan(&id)
 
-	var user User
+	var user SQLUser
 
 	err := db.QueryRow(
 		`SELECT id, name, email, age
@@ -148,7 +149,7 @@ func GetAllUsers(db *sql.DB) {
 	defer rows.Close()
 
 	for rows.Next() {
-		var user User
+		var user SQLUser
 
 		err := rows.Scan(
 			&user.ID,

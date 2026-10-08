@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -36,7 +37,6 @@ func CreateUser(
 	email string,
 	age int,
 ) (int, error) {
-
 	var id int
 
 	err := db.QueryRow(
@@ -54,28 +54,40 @@ func CreateUser(
 	return id, err
 }
 
-
 func GetUserByID(
 	ctx context.Context,
 	db *pgxpool.Pool,
 	id int,
-) (*User, error)
+) (*User, error) {
+	var user User
+
+	err := db.QueryRow(ctx, `
+		SELECT id, name, email, age
+		FROM users
+		WHERE id = $1
+	`, id).Scan(&user.ID, &user.Name, &user.Email, &user.Age)
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
+
 func main() {
 	ctx := context.Background()
 
-	db, err := pgxpool.New(
-		ctx,
-		"postgres://postgres:postgres@localhost:5432/go_crud",
-	)
+	databaseURL := os.Getenv("DATABASE_URL")
+	if databaseURL == "" {
+		log.Fatal("DATABASE_URL is not set; use postgres://USER:PASSWORD@localhost:5432/go_crud?sslmode=disable")
+	}
 
+	db, err := pgxpool.New(ctx, databaseURL)
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	defer db.Close()
 
-	err = db.Ping(ctx)
-	if err != nil {
+	if err := db.Ping(ctx); err != nil {
 		log.Fatal(err)
 	}
 

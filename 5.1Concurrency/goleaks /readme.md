@@ -6,13 +6,13 @@ Basic way a goroutine finishes.
 
 work → return → exit
 
-2. Channel Closing
+2. Channel Closing..
 Tells workers no more work is coming.
 for range over the channel ends after remaining jobs are processed.
 
 close(channel) → no more jobs → worker exits
 
-3. Context Cancellation
+3. Context Cancellation..
 Used when the caller wants to stop an operation.
 Useful for timeouts, HTTP requests, DB operations, etc.
 
@@ -29,3 +29,4 @@ Coordinates multiple goroutines and handles errors.
 Can also coordinate cancellation.
 
 goroutines + errors + cancellation
+

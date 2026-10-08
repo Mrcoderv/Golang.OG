@@ -1,8 +1,16 @@
 package student
 
 import (
+	"database/sql"
+	"errors"
+
+	"fmt"
+
 	"github.com/jmoiron/sqlx"
 )
+
+// ErrNotFound is returned when an update or delete matches no row.
+var ErrNotFound = errors.New("student not found")
 
 type Student struct {
 	ID   int    `db:"id"`
@@ -22,18 +30,20 @@ func CreateTable(db *sqlx.DB) error {
 	return err
 }
 
-// CreateStudent adds a new student.
-func CreateStudent(db *sqlx.DB, name string) error {
+// CreateStudent adds a new student and returns the generated ID.
+func CreateStudent(db *sqlx.DB, name string) (int, error) {
 	query := `
 		INSERT INTO students (name)
-		VALUES ($1);
+		VALUES ($1)
+		RETURNING id;
 	`
 
-	_, err := db.Exec(query, name)
-	return err
+	var id int
+	err := db.Get(&id, query, name)
+	return id, err
 }
 
-// GetStudents gets all students.
+// all students.
 func GetStudents(db *sqlx.DB) ([]Student, error) {
 	var students []Student
 
@@ -47,7 +57,7 @@ func GetStudents(db *sqlx.DB) ([]Student, error) {
 	return students, err
 }
 
-// GetStudent gets one student by ID.
+// student by ID.
 func GetStudent(db *sqlx.DB, id int) (Student, error) {
 	var student Student
 
@@ -69,16 +79,35 @@ func UpdateStudent(db *sqlx.DB, id int, name string) error {
 		WHERE id = $2;
 	`
 
-	_, err := db.Exec(query, name, id)
-	return err
+	res, err := db.Exec(query, name, id)
+	if err != nil {
+		return err
+	}
+	return requireRow(res, id)
 }
 
+// DeleteStudent removes a student by ID.
 func DeleteStudent(db *sqlx.DB, id int) error {
 	query := `
 		DELETE FROM students
 		WHERE id = $1;
 	`
 
-	_, err := db.Exec(query, id)
-	return err
+	res, err := db.Exec(query, id)
+	if err != nil {
+		return err
+	}
+	return requireRow(res, id)
+}
+
+// requireRow turns "0 rows affected" into ErrNotFound.
+func requireRow(res sql.Result, id int) error {
+	n, err := res.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if n == 0 {
+		return fmt.Errorf("id %d: %w", id, ErrNotFound)
+	}
+	return nil
 }

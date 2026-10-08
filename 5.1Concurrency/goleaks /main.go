@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sync"
 	"time"
 )
 
@@ -113,15 +112,7 @@ import (
 // 	fmt.Println("All workers are done")
 // }
 
-
-// Explicit exit 
-package main
-
-import (
-	"fmt"
-	"time"
-)
-
+// Explicit exit
 func worker() {
 	for i := 1; i <= 5; i++ {
 		fmt.Println("Worker processing:", i)

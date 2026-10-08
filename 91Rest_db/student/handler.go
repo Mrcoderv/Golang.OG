@@ -2,6 +2,7 @@ package student
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -132,6 +133,8 @@ func (h *Handler) updateStudent(w http.ResponseWriter, r *http.Request, id int) 
 		return
 	}
 
+	fmt.Println("Student updated successfully")
+
 	writeJSON(w, http.StatusOK, student)
 }
 
@@ -142,6 +145,8 @@ func (h *Handler) deleteStudent(w http.ResponseWriter, r *http.Request, id int) 
 		http.Error(w, "failed to delete student", http.StatusInternalServerError)
 		return
 	}
+
+	fmt.Println("Student deleted successfully")
 
 	w.WriteHeader(http.StatusNoContent)
 }

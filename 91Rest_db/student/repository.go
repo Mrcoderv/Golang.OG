@@ -1,6 +1,8 @@
 package student
 
 import (
+	"fmt"
+
 	"github.com/jmoiron/sqlx"
 )
 
@@ -28,7 +30,7 @@ func CreateStudent(db *sqlx.DB, name string) (Student, error) {
 	`
 
 	err := db.Get(&student, query, name)
-
+	fmt.Println("student added:", student)
 	return student, err
 }
 
@@ -43,6 +45,7 @@ func GetStudents(db *sqlx.DB) ([]Student, error) {
 	`
 
 	err := db.Select(&students, query)
+	fmt.Println("students retrieved:")
 
 	return students, err
 }

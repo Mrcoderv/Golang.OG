@@ -2,14 +2,17 @@ package database
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 )
 
 func Connect() (*sqlx.DB, error) {
-
-	dsn := "host=localhost port=5432 user=postgres dbname=go_crud sslmode=disable"
+	dsn := os.Getenv("DATABASE_URL")
+	if dsn == "" {
+		return nil, fmt.Errorf("DATABASE_URL is not set")
+	}
 
 	db, err := sqlx.Connect("postgres", dsn)
 

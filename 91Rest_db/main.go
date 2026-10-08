@@ -1,14 +1,20 @@
 package main
 
 import (
+	"errors"
 	"log"
 	"net/http"
+	"os"
 
-	"learning/91Rest_db/database"
-	"learning/91Rest_db/student"
+	"91Rest_db/database"
+	"91Rest_db/student"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	if err := godotenv.Load(); err != nil && !errors.Is(err, os.ErrNotExist) {
+		log.Fatalf("failed to load .env: %v", err)
+	}
 
 	// Connect to PostgreSQL
 	db, err := database.Connect()

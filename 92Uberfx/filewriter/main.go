@@ -4,18 +4,21 @@ import (
 	"go.uber.org/fx"
 )
 
-func Run(service *WriteService) {
-	if err := service.Execute(); err != nil {
-		panic(err)
-	}
+func Run(service *WriteService) error {
+	return service.Execute()
 }
 
 func main() {
-	fx.New(
+	app := fx.New(
 		fx.Provide(
-			NewFileWriter,
+			fx.Annotate(
+				NewFileWriter,
+				fx.As(new(Writer)),
+			),
 			NewWriteService,
 		),
 		fx.Invoke(Run),
-	).Run()
+	)
+
+	app.Run()
 }

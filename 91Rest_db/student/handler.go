@@ -2,16 +2,16 @@ package student
 
 import (
 	"encoding/json"
-	"fmt"
+	"errors"
 	"net/http"
 	"strconv"
 	"strings"
 
-	"github.com/jmoiron/sqlx"
+	"gorm.io/gorm"
 )
 
 type Handler struct {
-	DB *sqlx.DB
+	DB *gorm.DB
 }
 
 type createStudentRequest struct {
@@ -29,17 +29,15 @@ func (h *Handler) HandleStudents(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
 		h.getStudents(w, r)
-
 	case http.MethodPost:
 		h.createStudent(w, r)
-
 	default:
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
 	}
 }
 
 // HandleStudent handles:
-// GET    /students/{id}
+// GET    /students/{id}Key
 // PUT    /students/{id}
 // DELETE /students/{id}
 func (h *Handler) HandleStudent(w http.ResponseWriter, r *http.Request) {
@@ -54,13 +52,10 @@ func (h *Handler) HandleStudent(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
 		h.getStudent(w, r, id)
-
 	case http.MethodPut:
 		h.updateStudent(w, r, id)
-
 	case http.MethodDelete:
 		h.deleteStudent(w, r, id)
-
 	default:
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
 	}
@@ -70,8 +65,7 @@ func (h *Handler) HandleStudent(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) createStudent(w http.ResponseWriter, r *http.Request) {
 	var request createStudentRequest
 
-	err := json.NewDecoder(r.Body).Decode(&request)
-	if err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		http.Error(w, "invalid JSON", http.StatusBadRequest)
 		return
 	}
@@ -105,7 +99,7 @@ func (h *Handler) getStudents(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) getStudent(w http.ResponseWriter, r *http.Request, id int) {
 	student, err := GetStudent(h.DB, id)
 	if err != nil {
-		http.Error(w, "student not found", http.StatusNotFound)
+		writeDBError(w, err)
 		return
 	}
 
@@ -116,8 +110,7 @@ func (h *Handler) getStudent(w http.ResponseWriter, r *http.Request, id int) {
 func (h *Handler) updateStudent(w http.ResponseWriter, r *http.Request, id int) {
 	var request updateStudentRequest
 
-	err := json.NewDecoder(r.Body).Decode(&request)
-	if err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		http.Error(w, "invalid JSON", http.StatusBadRequest)
 		return
 	}
@@ -129,26 +122,36 @@ func (h *Handler) updateStudent(w http.ResponseWriter, r *http.Request, id int) 
 
 	student, err := UpdateStudent(h.DB, id, request.Name)
 	if err != nil {
-		http.Error(w, "student not found", http.StatusNotFound)
+		writeDBError(w, err)
 		return
 	}
-
-	fmt.Println("Student updated successfully")
 
 	writeJSON(w, http.StatusOK, student)
 }
 
 // DELETE /students/{id}
 func (h *Handler) deleteStudent(w http.ResponseWriter, r *http.Request, id int) {
-	err := DeleteStudent(h.DB, id)
+	deleted, err := DeleteStudent(h.DB, id)
 	if err != nil {
 		http.Error(w, "failed to delete student", http.StatusInternalServerError)
 		return
 	}
 
-	fmt.Println("Student deleted successfully")
+	if !deleted {
+		http.Error(w, "student not found", http.StatusNotFound)
+		return
+	}
 
 	w.WriteHeader(http.StatusNoContent)
+}
+
+// writeDBError maps a database error to 404 (not found) or 500 (anything else).
+func writeDBError(w http.ResponseWriter, err error) {
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		http.Error(w, "student not found", http.StatusNotFound)
+		return
+	}
+	http.Error(w, "internal server error", http.StatusInternalServerError)
 }
 
 func writeJSON(w http.ResponseWriter, status int, data any) {

@@ -8,6 +8,7 @@ import (
 
 	"91Rest_db/database"
 	"91Rest_db/student"
+
 	"github.com/joho/godotenv"
 )
 
@@ -16,25 +17,18 @@ func main() {
 		log.Fatalf("failed to load .env: %v", err)
 	}
 
-	// Connect to PostgreSQL
 	db, err := database.Connect()
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.Close()
-
 	log.Println("connected to PostgreSQL")
 
-	err = student.CreateTable(db)
-	if err != nil {
+	if err := db.AutoMigrate(&student.Student{}); err != nil {
 		log.Fatal(err)
 	}
-
 	log.Println("table ready")
 
-	studentHandler := &student.Handler{
-		DB: db,
-	}
+	studentHandler := &student.Handler{DB: db}
 
 	http.HandleFunc("/students", studentHandler.HandleStudents)
 	http.HandleFunc("/students/", studentHandler.HandleStudent)

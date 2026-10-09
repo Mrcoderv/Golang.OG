@@ -7,6 +7,20 @@ code that must be written by hand.
 This example uses [GORM](https://gorm.io/). Bun is another Go ORM, but it is a
 separate library and is not used in this project.
 
+## PostgreSQL connection
+
+The CRUD example reads its connection string from `DATABASE_URL`. Set it
+before running the program, using the PostgreSQL role and password configured
+on your machine:
+
+```bash
+export DATABASE_URL='postgres://mrrv:YOUR_PASSWORD@localhost:5432/go_crud?sslmode=disable'
+go run .
+```
+
+Do not commit the connection string or password to source control. If the
+database role does not exist, create it in PostgreSQL or use an existing role.
+
 ## Connection flow
 
 ```text
@@ -52,5 +66,4 @@ if err := sqlDB.Ping(); err != nil {
 
 GORM can then perform common operations such as creating records, querying
 rows, updating records, deleting records, and migrating tables.
-
 

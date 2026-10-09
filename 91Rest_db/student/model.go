@@ -1,6 +1,6 @@
 package student
 
 type Student struct {
-	ID   int    `db:"id"`
-	Name string `db:"name"`
+	ID   int    `gorm:"primaryKey" json:"id"`
+	Name string `gorm:"size:100;not null" json:"name"`
 }

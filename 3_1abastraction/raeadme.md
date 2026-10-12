@@ -3,6 +3,7 @@
 
 # The interface defines what must be done..
 
-# Abstraction is the concept → Interface is the Go mechanism → ISP is the design principle that guides how we structure interfaces.
+# Abstraction is the concept → Interface is the Go mechanism → ISP is the design principle that guides how we structure interfaces.4
+
 
 

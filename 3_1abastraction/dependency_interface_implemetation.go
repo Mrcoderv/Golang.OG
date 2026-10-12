@@ -1,3 +1,4 @@
+-- Active: 1790580078615@@127.0.0.1@5432@taskmanager
 package main
 
 import "fmt"
@@ -49,7 +50,7 @@ func main() {
 	ProcessPayment(khalti)
 
 	// using the dependency injection to call the implementation
-	task := NewPaymentService(esewa)
+	task := NewPaymentService(esewa)  // here we manually inject the dependency by passing the implementation to the constructor function
 	task.MakePayment(1880)
 	NewPaymentService(khalti).MakePayment(1000)
 }

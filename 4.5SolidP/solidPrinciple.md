@@ -24,7 +24,7 @@ If we replace an old implementation with a new implementation, the system should
 
 ### 4. I — Interface Segregation
 
-Give a component **only the essential features it actually needs**, instead of giving it a large interface with unnecessary methods.
+Give a component **only the essential features it actually needs  **, instead of giving it a large interface with unnecessary methods.
 
 > Give only what is needed.
 // a api is used to fetch user data from a database
@@ -50,9 +50,6 @@ The system should not depend directly on one specific implementation or brand.
 
 
 
-
-
-
 # How do we implement SOLID in Go?
 
 In Go, we mainly use:
@@ -72,6 +69,7 @@ Loose coupling
 For example:
 
 ```go
+
 type UserRepository interface {
     Save(name string) error
 }

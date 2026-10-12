@@ -47,12 +47,15 @@ func (w *FileWriter) Write(content string) error {
 }
 
 func (w *FileWriter) Close() error {
+	fmt.Println("[Fw] Closing file")
+
 	if w.file == nil {
 		return nil
 	}
 
 	err := w.file.Close()
 	w.file = nil
+
 	return err
 }
 

@@ -13,3 +13,6 @@ go.work.sum
 
 # OS
 .DS_Store
+
+# Local tests not published with the example API
+/fx-api/handler_test.go
